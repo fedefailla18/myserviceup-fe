@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Container, TextField, Button, Typography, Box } from '@mui/material'
+import { Container, TextField, Button, Typography, Box, Link } from '@mui/material'
 import { login as loginAction } from '../store/authSlice'
 import { login as loginApi } from '../services/api'
 
@@ -15,9 +15,7 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      console.log('Calling loginApi')
       const response = await loginApi(email, password)
-      console.log('Login response:', response)
       localStorage.setItem('token', response.jwt)
       dispatch(loginAction(email))
       navigate('/dashboard')
@@ -71,6 +69,12 @@ const Login = () => {
             Sign In
           </Button>
         </Box>
+      </Box>
+
+      <Box sx={{ my: 4 }}>
+        <Link href="/register" variant="body2">
+          {"Already have an account? register"}
+        </Link>
       </Box>
     </Container>
   )

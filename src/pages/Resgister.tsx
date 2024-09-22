@@ -1,34 +1,34 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Container, TextField, Button, Typography, Box, Alert, Link } from '@mui/material'
-import { register as registerApi } from '../services/api'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Container, TextField, Button, Typography, Box, Alert, Link } from '@mui/material';
+import { register as registerApi } from '../services/api';
 
 const Register: React.FC = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (password !== confirmPassword) {
       setError('Passwords do not match')
       return
     }
     try {
-      await registerApi(email, password)
-      navigate('/login', { state: { message: 'Registration successful. Please log in.' } })
+      await registerApi(email, password);
+      navigate('/login', { state: { message: 'Registration successful. Please log in.' } });
     } catch (error) {
-      setError('Registration failed. Please try again.')
+      setError('Registration failed. Please try again.');
     }
-  }
+  };
 
   return (
     <Container maxWidth="xs">
       <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography component="h1" variant="h5">
-          Sign up for ServiceUp
+          Register for Up!
         </Typography>
         {error && (
           <Alert severity="error" sx={{ mt: 2, width: '100%' }}>
@@ -78,7 +78,7 @@ const Register: React.FC = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Register
           </Button>
           <Box sx={{ textAlign: 'center' }}>
             <Link href="/login" variant="body2">
@@ -88,7 +88,7 @@ const Register: React.FC = () => {
         </Box>
       </Box>
     </Container>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

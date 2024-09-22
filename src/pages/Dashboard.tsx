@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Container, Typography, Box, Link } from '@mui/material'
+import { Container, Typography, Box } from '@mui/material'
 import { RootState } from '../store/store'
 
 const Dashboard: React.FC = () => {
@@ -16,12 +16,6 @@ const Dashboard: React.FC = () => {
           Welcome, {user}! This is your dashboard.
         </Typography>
       </Box>
-
-      <Box sx={{ my: 4 }}>
-            <Link href="/register" variant="body2">
-              {"Already have an account? register"}
-            </Link>
-          </Box>
     </Container>
   )
 }

@@ -5,20 +5,31 @@ const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token');
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config
 })
 
+api.interceptors.response.use(
+  (response) => {
+    console.log('Response:', response);
+    return response;
+  },
+  (error) => {
+    console.error('API Error:', error);
+    return Promise.reject(error);
+  }
+)
+
 export const login = async (email: string, password: string) => {
   try {
-    const response = await api.post('/auth/login', { email, password })
-    return response.data
+    const response = await api.post('/auth/login', { email, password });
+    return response.data;
   } catch (error) {
-    console.error('Login error:', error)
-    throw error
+    console.error('Login error:', error);
+    throw error;
   }
 }
 
