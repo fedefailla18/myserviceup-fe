@@ -33,13 +33,13 @@ export const login = async (email: string, password: string) => {
   }
 }
 
-export const register = async (email: string, password: string) => {
+export const register = async (email: string, password: string, userType: string) => {
   try {
-    const response = await api.post('/auth/register', { email, password })
-    return response.data
+    const response = await api.post('/auth/register', { email, password, userType });
+    return response.data;
   } catch (error) {
-    console.error('Registration error:', error)
-    throw error
+    console.error('Registration error:', error);
+    throw error;
   }
 }
 

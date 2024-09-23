@@ -6,21 +6,26 @@ import { login as loginAction } from '../store/authSlice'
 import { login as loginApi } from '../services/api'
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    setError('');
+    e.preventDefault();
     try {
-      const response = await loginApi(email, password)
-      localStorage.setItem('token', response.jwt)
-      dispatch(loginAction(email))
-      navigate('/dashboard')
+      const response = await loginApi(email, password);
+      localStorage.setItem('token', response.jwt);
+      const decodedToken = JSON.parse(atob(response.jwt.split('.')[1]));
+
+      const role = decodedToken.roles[0];
+      dispatch(loginAction({ email, role }));
+      console.log('role + ' + role)
+      navigate(role === 'ROLE_CUSTOMER' ? '/customer-dashboard' : '/provider-dashboard');
     } catch (error) {
-      setError('Invalid email or password')
+      setError('Invalid email or password');
     }
   }
 
@@ -71,9 +76,9 @@ const Login = () => {
         </Box>
       </Box>
 
-      <Box sx={{ my: 4 }}>
+      <Box sx={{ textAlign: 'center' }}>
         <Link href="/register" variant="body2">
-          {"Already have an account? register"}
+          {"Don't have an account? Register Here!"}
         </Link>
       </Box>
     </Container>

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Container, TextField, Button, Typography, Box, Alert, Link } from '@mui/material';
+import { Container, TextField, Button, Typography, Box, Alert, Link, FormControlLabel, RadioGroup, Radio } from '@mui/material';
 import { register as registerApi } from '../services/api';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [userType, setUserType] = useState<string>('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ const Register: React.FC = () => {
       return
     }
     try {
-      await registerApi(email, password);
+      await registerApi(email, password, userType);
       navigate('/login', { state: { message: 'Registration successful. Please log in.' } });
     } catch (error) {
       setError('Registration failed. Please try again.');
@@ -72,6 +73,16 @@ const Register: React.FC = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+          <RadioGroup
+            aria-label="user-type"
+            name="user-type"
+            value={userType}
+            onChange={(e) => setUserType(e.target.value)}
+            sx={{ mt: 2 }}
+          >
+            <FormControlLabel value="CUSTOMER" control={<Radio />} label="I need a service" />
+            <FormControlLabel value="SERVICE_PROVIDER" control={<Radio />} label="I want to offer a service" />
+          </RadioGroup>
           <Button
             type="submit"
             fullWidth
