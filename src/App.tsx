@@ -10,6 +10,7 @@ import ProtectedRoute from './components/ProtectedRoutes'
 import CustomerDashboard from './pages/CustomerDashboard'
 import ProviderDashboard from './pages/ProviderDashboard'
 import Unauthorized from './pages/Unauthorized'
+import ServiceRequestForm from './pages/ServiceRequestForm'
 
 const theme = createTheme()
 
@@ -28,6 +29,14 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['ROLE_CUSTOMER']}>
                 <CustomerDashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/request-service" 
+            element={
+              <ProtectedRoute allowedRoles={['ROLE_CUSTOMER']}>
+                <ServiceRequestForm />
               </ProtectedRoute>
             } 
           />
